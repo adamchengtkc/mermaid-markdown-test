@@ -15,7 +15,7 @@ jobs:
       - name: get changed files
         id: getfile
         run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.md$' -e '.*\.mermaid$' | xargs)"
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e './test/*\.md$'  | xargs)"
 
       - name: mermaid files changed
         run: |
@@ -25,20 +25,17 @@ jobs:
         uses: neenjaw/compile-mermaid-markdown-action@0.3.0
         with:
           files: ${{ steps.getfile.outputs.files }}
-          output: 'output1'
+          output: 'diagrams'
         env:
           HIDE_CODEBLOCKS: 1
           ABSOLUTE_IMAGE_LINKS: 1
 
-      - name: Commit files
+      - name: Commit updated package versions
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A && git commit -m "Add changed markdown and images"
-          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Sequence diagrams"
+          git push
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update
+
