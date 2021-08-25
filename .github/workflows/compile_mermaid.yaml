@@ -15,7 +15,9 @@ jobs:
       - name: get changed files
         id: getfile
         run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e './test*\.md$'  | xargs)"
+          cd /test
+          ls 
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.md$' -e '.*\.mermaid$' | xargs)"
 
       - name: mermaid files changed
         run: |
