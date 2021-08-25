@@ -30,7 +30,7 @@ jobs:
         
       - name: sequence diagram files changed
         run: |
-          rm -rf /docs
+          rm -rf docs
 
       - name: compile sequence diagram
         if: steps.filter.outputs.markdown == 'true'
