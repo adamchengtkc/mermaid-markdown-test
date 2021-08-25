@@ -28,7 +28,9 @@ jobs:
         run: |
           echo ${{ steps.filter.outputs.markdown_files }}
         
-
+      - name: sequence diagram files changed
+        run: |
+          rm -rf /docs
 
       - name: compile sequence diagram
         if: steps.filter.outputs.markdown == 'true'
@@ -39,6 +41,7 @@ jobs:
         env:
           HIDE_CODEBLOCKS: 1
           ABSOLUTE_IMAGE_LINKS: 0
+
 
 
       - name: Commit sequence diagram
