@@ -3,7 +3,6 @@ name: 'Compile Mermaid'
 on:
   push:
     paths:
-      - '**/*.mermaid'
       - '**/*.md'
 
 jobs:
