@@ -24,24 +24,13 @@ jobs:
           list-files: 'shell'
             
             
-      - name: mermaid files changed
+      - name: sequence diagram files changed
         run: |
           echo ${{ steps.filter.outputs.markdown_files }}
-          
-          
-      - name: get changed files
-        id: getfile
-        run: |
-          cd test
-          ls 
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -e '.*\.md$' -e '.*\.mermaid$' | xargs)"
-
-      - name: mermaid files changed
-        run: |
-          echo ${{ steps.getfile.outputs.files }}
+        
 
 
-      - name: compile mermaid
+      - name: compile sequence diagram
         if: steps.filter.outputs.markdown == 'true'
         uses: neenjaw/compile-mermaid-markdown-action@0.3.0
         with:
@@ -49,10 +38,11 @@ jobs:
           output: 'docs'
         env:
           HIDE_CODEBLOCKS: 1
-          ABSOLUTE_IMAGE_LINKS: 1
+          ABSOLUTE_IMAGE_LINKS: 0
 
 
-      - name: Commit files
+      - name: Commit sequence diagram
+        if: steps.filter.outputs.markdown == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
