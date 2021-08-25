@@ -1,4 +1,4 @@
-# Test this outaaaaaaa
+# Test this out
 
 Here is an inline mermaid file
 
