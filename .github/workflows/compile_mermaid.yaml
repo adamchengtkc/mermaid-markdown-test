@@ -20,7 +20,7 @@ jobs:
           base: update
           filters: |
             markdown:
-              - 'test/**'
+              - 'test/flow_inline.md'
           list-files: 'shell'
             
             
@@ -42,23 +42,21 @@ jobs:
 
 
       - name: compile mermaid
+        if: steps.filter.outputs.markdown == 'true'
         uses: neenjaw/compile-mermaid-markdown-action@0.3.0
         with:
-          files: ${{ steps.getfile.outputs.files }}
+          files: ${{ steps.filter.outputs.markdown_files }}
           output: 'output'
         env:
           HIDE_CODEBLOCKS: 1
           ABSOLUTE_IMAGE_LINKS: 1
 
       - name: Commit files
+        if: steps.filter.outputs.markdown == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A && git commit -m "Add changed markdown and images"
-          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Bump version number"
+          git push
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update
