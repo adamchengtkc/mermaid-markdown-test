@@ -12,6 +12,22 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
+          
+      - name: Run path filter
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: update
+          filters: |
+            markdown:
+              - 'test/**'
+            list-files: ''
+            
+      - name: mermaid files changed
+        run: |
+          echo ${{ steps.filter.outputs.markdown_files }}
+          
+          
       - name: get changed files
         id: getfile
         run: |
