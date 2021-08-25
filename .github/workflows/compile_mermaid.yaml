@@ -29,9 +29,16 @@ jobs:
           echo ${{ steps.filter.outputs.markdown_files }}
         
       - name: sequence diagram files changed
+        if: steps.filter.outputs.markdown == 'true'
         run: |
           rm -rf docs
-
+      - name: Commit sequence diagram
+        if: steps.filter.outputs.markdown == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A && git commit -m "Add changed markdown and images"
+          git push
       - name: compile sequence diagram
         if: steps.filter.outputs.markdown == 'true'
         uses: neenjaw/compile-mermaid-markdown-action@0.3.0
