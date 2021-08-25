@@ -2,8 +2,7 @@ name: 'Compile Mermaid'
 
 on:
   push:
-    paths:
-      - '**/*.md'
+
 
 jobs:
   build:
