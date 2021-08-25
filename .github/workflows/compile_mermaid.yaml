@@ -21,7 +21,8 @@ jobs:
           filters: |
             markdown:
               - 'test/**'
-            list-files: ''
+          list-files: 'shell'
+            
             
       - name: mermaid files changed
         run: |
