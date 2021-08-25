@@ -9,7 +9,7 @@ Here is an inline mermaid file
 
 ```mermaid
 graph TD;
-    Learn --> How --> Git --> Works;
+    Lear --> How --> Git --> Works;
 ```
 
 </details>
